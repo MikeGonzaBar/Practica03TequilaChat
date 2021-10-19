@@ -1,0 +1,1 @@
+const sign = "y4 n0 qu13r0 m45 t4r34 pl15";
