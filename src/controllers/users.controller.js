@@ -1,4 +1,4 @@
-const ObjectID = require('mongodb').ObjectID;
+const ObjectIdType = require('mongodb').ObjectID;
 const Database = require('../models/database.model.js');
 
 /**
@@ -22,7 +22,7 @@ class UsersController {
 
   static getUserById(req, res) {
     const usersDb = new Database('users');
-    usersDb.findOne({ _id: ObjectID(req.params.userId) }, {}).then((result) => {
+    usersDb.findOne({ _id: ObjectIdType(req.params.userId) }, {}).then((result) => {
       if (result) {
         res.status(200).send({ data: result });
       } else {
