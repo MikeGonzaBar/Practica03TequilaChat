@@ -1,6 +1,6 @@
 const Database = require('../models/database.model.js');
 const jwt = require('jsonwebtoken');
-const val = require("../middlewares/validaciones.js");
+const val = require("../middlewares/validations.js");
 
 /**
  * @typedef { import('./dataTypes').Login } Login
