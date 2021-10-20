@@ -31,26 +31,24 @@ class LoginController {
       email: req.body.email,
       password: req.body.password
     }
-    console.log(userData);
     const usersDB = new Database('users');
     usersDB
       .findOne({ email: userData.email }, {})
       .then((result) => {
-        if (result) {
-          console.log(result);
+        if (result && result.password == userData.password) {
           let newToken = jwt.sign({ idUser: result._id }, val.sign);
           var loginData = {
             userId: result._id,
             token: newToken
           }
           loginDB.insertOne(loginData).then((result) => {
-              res.send({ status: result });
+              res.send({ status: result, data: loginData});
             })
             .catch((err) => {
               res.status(400).send(err);
             });
         } else {
-          res.status(400).send({ BadRequest: 'User ' + userData.email + ' does not exist' });
+          res.status(400).send({ BadRequest: 'Data not correct'});
         }
       })
       .catch((err) => {
