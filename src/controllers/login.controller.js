@@ -1,5 +1,6 @@
 const Database = require('../models/database.model.js');
 const jwt = require('jsonwebtoken');
+const val = require("../middlewares/validaciones.js");
 
 /**
  * @typedef { import('./dataTypes').Login } Login
@@ -37,14 +38,12 @@ class LoginController {
       .then((result) => {
         if (result) {
           console.log(result);
-          let newToken = jwt.sign({ idUser: result._id }, "y4 n0 qu13r0 m45 t4r34 pl15");
+          let newToken = jwt.sign({ idUser: result._id }, val.sign);
           var loginData = {
             userId: result._id,
             token: newToken
           }
-          loginDB
-            .insertOne(loginData)
-            .then((result) => {
+          loginDB.insertOne(loginData).then((result) => {
               res.send({ status: result });
             })
             .catch((err) => {
