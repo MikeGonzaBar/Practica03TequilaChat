@@ -43,14 +43,14 @@ class UsersController {
     }
     usersDb.insertOne(userData).then((result) => {
       if(result.acknowledged){
-        res.send({ status: result });
+        res.status(200).send({ status: result });
       }
       else{
         res.status(400).send(result);  
       }
     })
     .catch((err) => {
-      res.status(400).send(err);
+      res.status(500).send(err);
     });
   }
 }
