@@ -36,22 +36,22 @@ class UsersController {
 
   static createUser(req, res) {
     const usersDb = new Database('users');
-    usersDb.findOne({ email:req.body.email }, {}).then((result) => {
-      if (result) {
-        res.status(400).send({ BadRequest: 'Email ' + req.body.email + 'already registered'  });
-      } else {
-        /** @type { User} */
-        var userData = {
-          email: req.body.email,
-          password: req.body.password
-        }
-        usersDb.insertOne(userData).then((result) => {
-          res.send({ status: result });
-        })
-        .catch((err) => {
-          res.status(400).send(err);
-        });      }
+    /** @type { User} */
+    var userData = {
+      email: req.body.email,
+      password: req.body.password
+    }
+    usersDb.insertOne(userData).then((result) => {
+      if(result.acknowledged){
+        res.send({ status: result });
+      }
+      else{
+        res.status(400).send(result);  
+      }
     })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
   }
 }
 
