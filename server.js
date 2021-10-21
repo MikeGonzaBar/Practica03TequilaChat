@@ -2,13 +2,26 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const config = dotenv.config();
-
+const swaggerJsDoc = require('swagger-jsdoc')
+const swaggerUi = require('swagger-ui-express')
 const MongoClient = require('mongodb').MongoClient;
 const Database = require('./src/models/database.model.js');
 
 const mainRouter = require('./src/routes');
 
 const PORT = process.env.PORT || 3000;
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    swagger: "2.0.0",
+    info:{
+      title: "TequilaChat API",
+      description: "Api for tequila chat documented by swagger",
+      version: "1.0.0",
+      servers: ['http//localhost:'+PORT]
+    }
+  }
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
